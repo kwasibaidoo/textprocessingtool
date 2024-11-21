@@ -67,6 +67,10 @@ public class TextProcessingController {
             error_text.setText(textVal.getMessage());
         }
         else {
+            error_regex.setText("");
+            error_text.setText("");
+            error_query.setText("");
+            
             boolean success = MatcherUtil.match(regex.getText(), text.getText());
             if(success) {
                 notificationToast.showNotification(AlertType.CONFIRMATION, "Match Found", "There is a match for the word '" + text.getText() + "'");
@@ -79,7 +83,48 @@ public class TextProcessingController {
 
     @FXML
     void replace(MouseEvent event) {
+        ValidationResult regexVal = Validator.validate(regex.getText(),"not_null", "regex");
+        ValidationResult textVal = Validator.validate(text.getText(), "not_null");
+        ValidationResult queryVal = Validator.validate(text.getText(), "not_null");
 
+        if(!regexVal.isSuccess() || !textVal.isSuccess() || !queryVal.isSuccess()) {
+            error_regex.setText(regexVal.getMessage());
+            error_text.setText(textVal.getMessage());
+            error_query.setText(queryVal.getMessage());
+        }
+        else{
+            error_regex.setText("");
+            error_text.setText("");
+            error_query.setText("");
+
+            List<List<Integer>> results = SearchUtil.search(regex.getText(), text.getText());
+            searchResult.getChildren().clear();
+            int lastEnd = 0;
+            for (List<Integer> list : results) {
+                String beforeMatch = text.getText().substring(lastEnd, list.get(0));
+                if (!beforeMatch.isEmpty()) {
+                    searchResult.getChildren().add(new Text(beforeMatch));
+                }
+
+                String matchText = text.getText().substring(list.get(0), list.get(1));
+                Rectangle background = new Rectangle(0, 0, matchText.length() * 7, 15); 
+                background.setFill(Color.BLACK);
+                Text matchTextNode = new Text(matchText);
+                matchTextNode.setFill(Color.WHITE); 
+                matchTextNode.setFont(Font.font("Arial", 12));
+                matchTextNode.setText(query.getText());
+
+                StackPane matchContainer = new StackPane(background, matchTextNode);
+                // matchContainer.setSpacing(0);
+                searchResult.getChildren().add(matchContainer);
+
+                lastEnd = list.get(1);
+            }
+            String remainingText = text.getText().substring(lastEnd);
+            if (!remainingText.isEmpty()) {
+                searchResult.getChildren().add(new Text(remainingText));
+            }
+        }
     }
 
     @FXML
@@ -92,6 +137,10 @@ public class TextProcessingController {
             error_text.setText(textVal.getMessage());
         }
         else{
+            error_regex.setText("");
+            error_text.setText("");
+            error_query.setText("");
+
             List<List<Integer>> results = SearchUtil.search(regex.getText(), text.getText());
             searchResult.getChildren().clear();
             int lastEnd = 0;

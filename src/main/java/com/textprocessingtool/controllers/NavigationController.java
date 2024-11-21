@@ -8,6 +8,7 @@ import com.textprocessingtool.App;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 
@@ -23,7 +24,15 @@ public class NavigationController {
     private VBox content;
 
     @FXML
-    private VBox route_textProcessing;
+    private Label route_dataManipulation;
+
+    @FXML
+    private Label route_textProcessing;
+
+    @FXML
+    void navDataManipulation(MouseEvent event) {
+        loadPage("data_manipulation.fxml");
+    }
 
     @FXML
     void navTextProcessing(MouseEvent event) {
@@ -32,8 +41,7 @@ public class NavigationController {
 
     @FXML
     void initialize() {
-        assert content != null : "fx:id=\"content\" was not injected: check your FXML file 'layout.fxml'.";
-        assert route_textProcessing != null : "fx:id=\"route_textProcessing\" was not injected: check your FXML file 'layout.fxml'.";
+        
 
     }
 
