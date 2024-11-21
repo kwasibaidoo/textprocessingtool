@@ -1,6 +1,9 @@
 package com.textprocessingtool.controllers;
 
+import java.util.List;
+
 import com.textprocessingtool.textutils.MatcherUtil;
+import com.textprocessingtool.textutils.SearchUtil;
 import com.textprocessingtool.utils.NotificationToast;
 import com.textprocessingtool.utils.ValidationResult;
 import com.textprocessingtool.utils.Validator;
@@ -12,6 +15,13 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 
 public class TextProcessingController {
 
@@ -45,6 +55,9 @@ public class TextProcessingController {
     private TextArea text;
 
     @FXML
+    private TextFlow searchResult;
+
+    @FXML
     void match(MouseEvent event) {
         ValidationResult regexVal = Validator.validate(regex.getText(),"not_null", "regex");
         ValidationResult textVal = Validator.validate(text.getText(), "not_null");
@@ -71,7 +84,41 @@ public class TextProcessingController {
 
     @FXML
     void search(MouseEvent event) {
+        ValidationResult regexVal = Validator.validate(regex.getText(),"not_null", "regex");
+        ValidationResult textVal = Validator.validate(text.getText(), "not_null");
 
+        if(!regexVal.isSuccess() || !textVal.isSuccess()) {
+            error_regex.setText(regexVal.getMessage());
+            error_text.setText(textVal.getMessage());
+        }
+        else{
+            List<List<Integer>> results = SearchUtil.search(regex.getText(), text.getText());
+            searchResult.getChildren().clear();
+            int lastEnd = 0;
+            for (List<Integer> list : results) {
+                String beforeMatch = text.getText().substring(lastEnd, list.get(0));
+                if (!beforeMatch.isEmpty()) {
+                    searchResult.getChildren().add(new Text(beforeMatch));
+                }
+
+                String matchText = text.getText().substring(list.get(0), list.get(1));
+                Rectangle background = new Rectangle(0, 0, matchText.length() * 7, 15); 
+                background.setFill(Color.BLACK);
+                Text matchTextNode = new Text(matchText);
+                matchTextNode.setFill(Color.WHITE); 
+                matchTextNode.setFont(Font.font("Arial", 12));
+
+                StackPane matchContainer = new StackPane(background, matchTextNode);
+                // matchContainer.setSpacing(0);
+                searchResult.getChildren().add(matchContainer);
+
+                lastEnd = list.get(1);
+            }
+            String remainingText = text.getText().substring(lastEnd);
+            if (!remainingText.isEmpty()) {
+                searchResult.getChildren().add(new Text(remainingText));
+            }
+        }
     }
 
 }
