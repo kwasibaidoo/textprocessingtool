@@ -10,9 +10,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="379.0" prefWidth="402.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.textprocessingtool.controllers.DataManipulationController">
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="379.0" prefWidth="402.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.textprocessingtool.controllers.ViewCollectionController">
    <children>
-      <Label text="Data Manipulation">
+      <Label text="View Collection">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
@@ -60,15 +60,9 @@
                      <children>
                         <TextField fx:id="name" promptText="Collection name" />
                         <Label fx:id="error_name" textFill="RED" />
+                        <Button mnemonicParsing="false" onMouseClicked="#submit" text="Submit" />
                      </children>
                   </VBox>
-                  <VBox layoutX="21.0" layoutY="48.0">
-                     <children>
-                        <TextField fx:id="features" promptText="Features" />
-                        <Label fx:id="error_features" textFill="RED" />
-                     </children>
-                  </VBox>
-                  <Button mnemonicParsing="false" onMouseClicked="#submit" text="Submit" />
                </children>
             </VBox>
          </children>

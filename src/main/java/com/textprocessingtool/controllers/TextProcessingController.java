@@ -10,12 +10,12 @@ import com.textprocessingtool.utils.Validator;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -26,6 +26,9 @@ import javafx.scene.text.TextFlow;
 public class TextProcessingController {
 
     private NotificationToast notificationToast = new NotificationToast();
+
+    @FXML
+    private CheckBox case_sensitive;
 
     @FXML
     private Label error_query;
@@ -71,7 +74,7 @@ public class TextProcessingController {
             error_text.setText("");
             error_query.setText("");
             
-            boolean success = MatcherUtil.match(regex.getText(), text.getText());
+            boolean success = MatcherUtil.match(regex.getText(), text.getText(), case_sensitive.isSelected());
             if(success) {
                 notificationToast.showNotification(AlertType.CONFIRMATION, "Match Found", "There is a match for the word '" + text.getText() + "'");
             }
@@ -97,7 +100,7 @@ public class TextProcessingController {
             error_text.setText("");
             error_query.setText("");
 
-            List<List<Integer>> results = SearchUtil.search(regex.getText(), text.getText());
+            List<List<Integer>> results = SearchUtil.search(regex.getText(), text.getText(), case_sensitive.isSelected());
             searchResult.getChildren().clear();
             int lastEnd = 0;
             for (List<Integer> list : results) {
@@ -141,7 +144,7 @@ public class TextProcessingController {
             error_text.setText("");
             error_query.setText("");
 
-            List<List<Integer>> results = SearchUtil.search(regex.getText(), text.getText());
+            List<List<Integer>> results = SearchUtil.search(regex.getText(), text.getText(), case_sensitive.isSelected());
             searchResult.getChildren().clear();
             int lastEnd = 0;
             for (List<Integer> list : results) {

@@ -20,6 +20,9 @@ public class Validator {
                     return new ValidationResult("Regex syntax error: " + e.getDescription(), false);
                 }
             }
+            if(string.equals("unique")) {
+                
+            }
         }
         return new ValidationResult();
     }
