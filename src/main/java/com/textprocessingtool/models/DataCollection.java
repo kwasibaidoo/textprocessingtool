@@ -1,8 +1,8 @@
 package com.textprocessingtool.models;
 
 
-import java.util.ArrayList;
-import java.util.HashMap;
+
+import java.util.Objects;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,18 +15,18 @@ public class DataCollection {
     
 
     private int id;
-    private String name;
-    private ArrayList<String> features;
+    private String data;
 
-    // use generics here
-    private HashMap<String,String> entries;
-
-    public DataCollection(String name) {
-        this.name = name;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        DataCollection dataCollection = (DataCollection) o;
+        return id == dataCollection.id;
     }
 
-    public DataCollection(String name, ArrayList<String> features) {
-        this.name = name;
-        this.features = features;
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

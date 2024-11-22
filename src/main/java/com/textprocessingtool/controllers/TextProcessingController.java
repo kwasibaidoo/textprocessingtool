@@ -1,7 +1,10 @@
 package com.textprocessingtool.controllers;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
+import com.textprocessingtool.models.DataCollection;
 import com.textprocessingtool.textutils.MatcherUtil;
 import com.textprocessingtool.textutils.SearchUtil;
 import com.textprocessingtool.utils.NotificationToast;
@@ -26,9 +29,16 @@ import javafx.scene.text.TextFlow;
 public class TextProcessingController {
 
     private NotificationToast notificationToast = new NotificationToast();
+    private HashMap<DataCollection, String> collection_list = new HashMap<DataCollection,String>();
 
     @FXML
     private CheckBox case_sensitive;
+
+    @FXML
+    private Button add_to_collection;
+
+    @FXML
+    private Button view_collection;
 
     @FXML
     private Label error_query;
@@ -59,6 +69,25 @@ public class TextProcessingController {
 
     @FXML
     private TextFlow searchResult;
+
+    @FXML
+    void addToCollection(MouseEvent event) {
+        ValidationResult textVal = Validator.validate(text.getText(), "not_null");
+
+        if(!textVal.isSuccess()){
+            error_text.setText(textVal.getMessage());
+        }
+        else{
+            error_text.setText("");
+            DataCollection entry = new DataCollection();
+            // collection_list.p
+        }
+    }
+
+    @FXML
+    void viewCollection(MouseEvent event) {
+
+    }
 
     @FXML
     void match(MouseEvent event) {

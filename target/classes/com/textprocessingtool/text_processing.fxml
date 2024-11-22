@@ -11,14 +11,14 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.TextFlow?>
 
-<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="379.0" prefWidth="402.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.textprocessingtool.controllers.TextProcessingController">
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="510.0" prefWidth="516.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.textprocessingtool.controllers.TextProcessingController">
    <children>
       <Label text="Text Processing">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <VBox prefHeight="350.0" prefWidth="362.0" spacing="10.0">
+      <VBox prefHeight="454.0" prefWidth="362.0" spacing="10.0">
          <children>
             <VBox prefHeight="25.0" prefWidth="322.0">
                <children>
@@ -45,11 +45,13 @@
                   <TextFlow fx:id="searchResult" prefHeight="200.0" prefWidth="200.0" style="-fx-border-width: 2px; -fx-border-style: solid;" />
                </children>
             </VBox>
-            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+            <HBox alignment="CENTER_LEFT" prefHeight="61.0" prefWidth="322.0" spacing="10.0">
                <children>
                   <Button fx:id="search" mnemonicParsing="false" onMouseClicked="#search" text="Search" />
                   <Button fx:id="replace" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onMouseClicked="#replace" text="Replace" />
                   <Button fx:id="match" layoutX="62.0" layoutY="10.0" mnemonicParsing="false" onMouseClicked="#match" text="Match" />
+                  <Button fx:id="view_collection" layoutX="140.0" layoutY="10.0" mnemonicParsing="false" onMouseClicked="#viewCollection" text="View Collection" />
+                  <Button fx:id="add_to_collection" layoutX="200.0" layoutY="10.0" mnemonicParsing="false" onMouseClicked="#addToCollection" text="Add to Collection" />
                </children>
                <opaqueInsets>
                   <Insets />
