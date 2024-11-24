@@ -1,9 +1,11 @@
 package com.textprocessingtool.controllers;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+
+import java.io.IOException;
 import java.util.List;
 
+import com.textprocessingtool.App;
+import com.textprocessingtool.models.CollectionDAO;
 import com.textprocessingtool.models.DataCollection;
 import com.textprocessingtool.textutils.MatcherUtil;
 import com.textprocessingtool.textutils.SearchUtil;
@@ -12,6 +14,9 @@ import com.textprocessingtool.utils.ValidationResult;
 import com.textprocessingtool.utils.Validator;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
@@ -25,11 +30,12 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
+import javafx.stage.Stage;
 
 public class TextProcessingController {
 
     private NotificationToast notificationToast = new NotificationToast();
-    private HashMap<DataCollection, String> collection_list = new HashMap<DataCollection,String>();
+    private CollectionDAO dao = CollectionDAO.getInstance();
 
     @FXML
     private CheckBox case_sensitive;
@@ -80,13 +86,30 @@ public class TextProcessingController {
         else{
             error_text.setText("");
             DataCollection entry = new DataCollection();
-            // collection_list.p
+            entry.setData(text.getText());
+            entry.setId(dao.getNextId());
+            dao.save(entry);
+
+            notificationToast.showNotification(AlertType.INFORMATION, "Success", "Text added to collection.");
         }
     }
 
     @FXML
     void viewCollection(MouseEvent event) {
-
+        // pass the data to viewcontroller
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("viewcollection.fxml"));
+            Parent root = fxmlLoader.load();
+            ViewCollectionController controller = fxmlLoader.getController();
+            controller.setDataCollection(dao.findAll());
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+            stage.setTitle("View Collection");
+            stage.setScene(scene);
+            stage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
