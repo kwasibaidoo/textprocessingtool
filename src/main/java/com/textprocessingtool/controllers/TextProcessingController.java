@@ -108,7 +108,7 @@ public class TextProcessingController {
             stage.setScene(scene);
             stage.showAndWait();
         } catch (IOException e) {
-            e.printStackTrace();
+            notificationToast.showNotification(AlertType.ERROR, "Error while loading window", e.getMessage());
         }
     }
 
