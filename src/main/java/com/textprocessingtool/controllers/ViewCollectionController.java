@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 
 import com.textprocessingtool.models.CollectionDAO;
 import com.textprocessingtool.models.DataCollection;
+import com.textprocessingtool.utils.NotificationToast;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -13,12 +14,15 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.MouseEvent;
 
 public class ViewCollectionController {
 
     private CollectionDAO dao = CollectionDAO.getInstance();
+    private NotificationToast notificationToast = new NotificationToast();
 
     @FXML
     private ResourceBundle resources;
@@ -37,9 +41,6 @@ public class ViewCollectionController {
 
     @FXML
     private TableColumn<DataCollection, Integer> id_column;
-
-    @FXML
-    private Button update;
 
     @FXML
     void delete(MouseEvent event) {
@@ -62,13 +63,23 @@ public class ViewCollectionController {
     void initialize() {
         id_column.setCellValueFactory(new PropertyValueFactory<>("id"));
         data.setCellValueFactory(new PropertyValueFactory<>("data"));
+        id_column.setEditable(true);
+        data.setEditable(true);
+        data.setCellFactory(TextFieldTableCell.forTableColumn());
 
         collections_table.setItems(dataCollectionList);
+
+        data.setOnEditCommit(event -> {
+            DataCollection editedItem = event.getRowValue();
+            editedItem.setData(event.getNewValue());
+            dao.update(editedItem);
+            notificationToast.showNotification(AlertType.CONFIRMATION, "Value Updated Successfully", "Collection item updated successfully");
+        });
+
 
     }
 
     public void setDataCollection(List<DataCollection> all) {
-        // ObservableList<DataCollection> dataCollectionList = FXCollections.observableArrayList(all);
         dataCollectionList.addAll(all);
         collections_table.setItems(dataCollectionList);
     }

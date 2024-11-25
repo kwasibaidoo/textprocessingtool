@@ -128,10 +128,10 @@ public class TextProcessingController {
             
             boolean success = MatcherUtil.match(regex.getText(), text.getText(), case_sensitive.isSelected());
             if(success) {
-                notificationToast.showNotification(AlertType.CONFIRMATION, "Match Found", "There is a match for the word '" + text.getText() + "'");
+                notificationToast.showNotification(AlertType.CONFIRMATION, "Match Found", "There is a match for the string '" + text.getText() + "'");
             }
             else {
-                notificationToast.showNotification(AlertType.CONFIRMATION, "No Match Found", "There is no match for the word '" + text.getText() + "'");
+                notificationToast.showNotification(AlertType.CONFIRMATION, "No Match Found", "There is no match for the string '" + text.getText() + "'");
             }
         }
     }

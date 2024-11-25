@@ -42,4 +42,13 @@ public class CollectionDAO {
     public boolean deleteById(int id) {
         return collectionMap.remove(id) != null;
     }
+
+    public boolean update(DataCollection dataCollection) {
+        int id = dataCollection.getId();  // Get the ID of the data collection to update
+        if (collectionMap.containsKey(id)) {
+            collectionMap.put(id, dataCollection);
+            return true;
+        }
+        return false;
+    }
 }

@@ -18,7 +18,7 @@
       </Label>
       <VBox prefHeight="454.0" prefWidth="362.0" spacing="10.0">
          <children>
-            <TableView fx:id="collections_table" prefHeight="200.0" prefWidth="200.0">
+            <TableView fx:id="collections_table" editable="true" prefHeight="200.0" prefWidth="200.0">
               <columns>
                 <TableColumn fx:id="id_column" prefWidth="75.0" text="ID" />
                 <TableColumn fx:id="data" prefWidth="75.0" text="String" />
@@ -30,7 +30,6 @@
             <HBox alignment="CENTER_LEFT" prefHeight="61.0" prefWidth="322.0" spacing="10.0">
                <children>
                   <Button fx:id="delete" mnemonicParsing="false" onMouseClicked="#delete" text="Delete" />
-                  <Button fx:id="update" layoutX="62.0" layoutY="10.0" mnemonicParsing="false" onMouseClicked="#update" text="Update" />
                </children>
                <opaqueInsets>
                   <Insets />
